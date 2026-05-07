@@ -1,0 +1,33 @@
+name: Deploy bot to server
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Проверка кода из репозитория
+        uses: actions/checkout@v4
+
+      - name: Деплой через SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /opt/bot/botDemo
+            echo "Pull изменений из GitHub..."
+            git pull origin main
+            echo "Перезапуск бота..."
+            systemctl restart bot
+            sleep 5
+            if systemctl is-active --quiet bot; then
+              echo "✅ Бот успешно перезапущен"
+            else
+              echo "❌ Бот не запустился!"
+              exit 1
+            fi
