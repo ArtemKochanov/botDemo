@@ -17,7 +17,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /opt/botDemo
-            git pull origin main
-            docker build -t botdemo .
-            docker rm -f botdemo
-            docker run -d --name botdemo --restart always --env-file .env botdemo
+            git fetch origin
+            git reset --hard origin/main
+            docker compose up -d --build --force-recreate
