@@ -1,7 +1,0 @@
-services:
-    bot:
-        build: .
-        container_name: botdemo
-        restart: always
-        environment: 
-            API_TOKEN: 6794655518:AAGxm0xiF5pjg9HeZT0GQtwAMHxgZkNaDbQ
