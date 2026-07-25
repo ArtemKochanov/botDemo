@@ -5,3 +5,5 @@ services:
         restart: always
         env_file:
             - .env
+        volumes: 
+            - ./image.jpg:/app/image.jpg
