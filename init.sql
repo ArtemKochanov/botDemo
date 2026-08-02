@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS warnings (
+    user_id BIGINT PRIMARY KEY,
+    count INTEGER NOT NULL DEFAULT 0
+);
