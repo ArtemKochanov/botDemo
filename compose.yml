@@ -1,32 +1,32 @@
 services:
-    bot:
-        build: .
-        container_name: botdemo
-        restart: always
-        env_file:
-            - .env
-        volumes: 
-            - ./image.jpg:/app/image.jpg
-        depends_on:
-            db:
-                condition: service_healthy
+  bot:
+    build: .
+    container_name: botdemo
+    restart: always
+    env_file:
+      - .env
+    volumes: 
+      - ./image.jpg:/app/image.jpg
+    depends_on:
+      db:
+        condition: service_healthy
 
-    db:
-        image: posetgres:16-alpine
-        container_name: botdemo_db
-        restart: always
-        environment: 
-            POSTGRES_USER: botuser
-            POSTGRES_PASSWORD: ${DB_PASSWORD}
-            POSTGRES_DB: botdb
-        volumes:
-            - pgdata:/var/lib/postresql/data
-            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-        healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U botuser -d botdb"]
-            interval: 5s
-            timeout: 5s
-            retries: 5
+  db:
+    image: postgres:16-alpine
+      container_name: botdemo-db
+      restart: always
+      environment: 
+        POSTGRES_USER: botuser
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
+        POSTGRES_DB: botdb
+    volumes:
+      - pgdata:/var/lib/postresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U botuser -d botdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
-    pgdata:
+  pgdata:
