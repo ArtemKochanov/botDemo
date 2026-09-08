@@ -20,7 +20,7 @@ services:
         POSTGRES_PASSWORD: ${DB_PASSWORD}
         POSTGRES_DB: botdb
     volumes:
-      - pgdata:/var/lib/postresql/data
+      - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U botuser -d botdb"]

@@ -17,6 +17,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /opt/botDemo
+            git config --global --add safe.directory /opt/botDemo
             git fetch origin
             git reset --hard origin/main
             docker compose up -d --build --force-recreate
