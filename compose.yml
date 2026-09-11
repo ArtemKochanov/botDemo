@@ -13,12 +13,12 @@ services:
 
   db:
     image: postgres:16-alpine
-      container_name: botdemo-db
-      restart: always
-      environment: 
-        POSTGRES_USER: botuser
-        POSTGRES_PASSWORD: ${DB_PASSWORD}
-        POSTGRES_DB: botdb
+    container_name: botdemo-db
+    restart: always
+    environment: 
+      POSTGRES_USER: botuser
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: botdb
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
