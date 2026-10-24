@@ -1,3 +1,4 @@
+
 name: Deploy to Server
 
 on:
@@ -8,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -15,9 +17,16 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           script: |
+            # Переходим в каталог проекта
             cd /opt/botDemo
-            git config --global --add safe.directory /opt/botDemo
+
+            # Получаем свежие изменения из GitHub
             git fetch origin
+
+            # Приводим локальную ветку main к версии из GitHub
             git reset --hard origin/main
+
+            # Пересобираем образ и запускаем обновлённые контейнеры
             docker compose up -d --build --force-recreate
